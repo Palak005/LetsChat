@@ -7,13 +7,13 @@ const Signup = async(req, res)=>{
         const {fullname, username, password, confirmPassword, gender} = req.body;
 
         if(password != confirmPassword){
-            return res.status(201).send({message : "Password Doesn't Matched"});
+            return res.status(400).send({message : "Password Doesn't Matched"});
         }
 
         const user = await User.findOne({username});
 
         if(user){
-            return res.status(201).send({message : "User Already Exists"});
+            return res.status(400).send({message : "User Already Exists"});
         }
 
         //Hashing Password
@@ -60,13 +60,13 @@ const Login = async(req, res)=>{
         const user = await User.findOne({username});
 
         if(!user){
-            return res.status(201).send({message : "User Does not Exists"});
+            return res.status(400).send({message : "User Does not Exists"});
         }
 
         //Decoding Password
         const passCorrect = await bcrypt.compare(password, user.password || "")
         if(!passCorrect){
-            return res.status(201).send({message : "Incorrect Password"});
+            return res.status(400).send({message : "Incorrect Password"});
         }
 
         //generating token

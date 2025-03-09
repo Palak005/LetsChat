@@ -1,5 +1,6 @@
 import {Conversation} from "../models/conversation.model.js";
 import {Message} from "../models/message.model.js";
+import { getSocketId, io } from "../socket/socket.js";
 
 const sendMessage = async(req, res)=>{
     try{
@@ -43,6 +44,15 @@ const sendMessage = async(req, res)=>{
 
         //For parallell execution of both the operations
         Promise.all([conversation.save(),newMessage.save()]);
+
+        //Implementing socket.io
+        const recieverSocketId = getSocketId(receiverId);
+        if(recieverSocketId){
+            //send event to a specific client
+            io.to(recieverSocketId).emit("newMessage", newMessage);
+        }
+        
+
         res.status(200).json({
             newMessage,
         });
@@ -62,8 +72,8 @@ const getMessage = async(req, res)=>{
 
         //Finding the existing conversation between the two users
         let conversation = await Conversation.findOne({participants : {$all: [senderId, receiverId]}}).populate("message");
-
         if(!conversation){
+            console.log("No conversations initiated yet");
             return res.status(400).json([]);
         };
 
@@ -74,9 +84,7 @@ const getMessage = async(req, res)=>{
             messages = [];
         }
 
-        res.status(200).json({
-            messages
-        });
+        res.status(200).json(messages);
 
     } catch(error){
         console.log("Error while getting message", error.message);

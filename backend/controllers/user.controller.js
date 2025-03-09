@@ -6,8 +6,6 @@ const getAllUsers = async(req, res)=>{
         const filteredUsers = await User.find({_id : {$ne : loggedInUser}}).select("-password");
 
         res.status(200).json(filteredUsers);
-        
-
     } catch(error){
         console.log("Error while getting all users : ", error.message);
         res.status(400).json({error : error.message});

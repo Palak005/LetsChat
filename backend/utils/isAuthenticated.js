@@ -14,7 +14,6 @@ const isAutheticated = async(req, res, next)=>{
         const decode = jwt.verify(token, process.env.JWT_SECRET);
 
         //Finding the corresponding user;
-
         const user = await User.findById(decode.userId).select("-password");
 
         if(!user){

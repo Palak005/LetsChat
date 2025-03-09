@@ -7,7 +7,7 @@ const genToken = (res, userId) =>{
     });
 
     res.cookie("token", token, {
-        maxAge: 1 * 24 * 60 * 1000,
+        maxAge: 24 * 60 * 60* 1000,
         httpOnly: true, //preventing XXS
         sameSite: "strict", //preventing forgery, and cross site requests
         secure: process.env.ENVIRONMENT !== "development"

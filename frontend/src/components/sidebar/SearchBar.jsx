@@ -1,7 +1,38 @@
+import { useState } from "react";
+import toast from "react-hot-toast";
+import useGetConversations from "../../hooks/useGetConversations.js";
+import useConversation from "../../zustand/useConversation.js";
+
 const SearchBar = ()=>{
-    return <div className="navbar text-primary-content p-3 rounded-2xl bg-[#3C364C]">
+    const [searchChat , setSearchChat] = useState("");
+    const {setSelectedConversation} = useConversation();
+    let {conversations} = useGetConversations();
+
+    const handleSubmit = (e)=>{
+        e.preventDefault();
+        if(!searchChat) return;
+
+        if(searchChat.length<3){
+            return toast.error("Search length must be more than 3")
+        }
+
+        const conversation = conversations.find((con)=> con.username.toLowerCase().includes(searchChat.toLowerCase()));
+        
+        if(conversation){
+            setSelectedConversation(conversation);
+            setSearchChat("");
+        }else{
+            toast.error("No Matching Results Found")
+        }
+
+    }
+
+    return <form onSubmit={handleSubmit} className="navbar text-primary-content p-3 rounded-2xl bg-[#3C364C]">
         <div className="form-control">
-            <input type="text" placeholder="Search" className="input input-bordered rounded-2xl w-24 md:w-auto bg-[#3C364C]" />
+            <input type="text" 
+                placeholder="Search" 
+                onChange={(e)=>{setSearchChat(e.target.value)}}
+                className="input input-bordered rounded-2xl w-24 md:w-auto bg-[#3C364C]" />
         </div>
         <div className="navbar-end">
         <button className="btn btn-ghost btn-circle">
@@ -19,7 +50,7 @@ const SearchBar = ()=>{
         </svg>
         </button>
         </div>
-    </div>
+    </form>
 }
 
 export default SearchBar;
