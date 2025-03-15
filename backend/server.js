@@ -7,12 +7,14 @@ import messageRouter from "./routers/message.routes.js";
 import userRouter from "./routers/user.routes.js";
 import cookieParser from "cookie-parser";
 import {app, server} from "./socket/socket.js";
+import cors from "cors";
 
 dotenv.config();
 
 const PORT = process.env.PORT;
 const __dirname = path.resolve();
 
+app.use(cors({ origin: "https://letschat-bplh.onrender.com" }));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api/auth", authRouter);

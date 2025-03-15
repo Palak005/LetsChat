@@ -1,5 +1,4 @@
 import express from "express";
-import cors from "cors";
 import { Server } from "socket.io";
 import http from "http";
 
@@ -8,7 +7,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: ["http://localhost:3000"],
+        origin: ["http://localhost:3000", "https://letschat-bplh.onrender.com"],
         methods: ["GET", "POST"],
         credentials: true
     }
