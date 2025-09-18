@@ -21,7 +21,7 @@ export const SocketContextProvider = ({children})=>{
             });
             setSocket(socket);
 
-            socket.on("getOnlineUsers",(users)=>{ //used to listeind to the events can be used on both client as well as server side
+            socket.on("getOnlineUsers",(users)=>{ //used to listen to the events can be used on both client as well as server side
                 setOnlineUsers(users);
             });
             return ()=> socket.close();

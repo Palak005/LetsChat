@@ -6,6 +6,10 @@ import Signup from "./pages/signup/Signup.jsx";
 import Home from "./pages/home/Home.jsx";
 import { useAuthContext } from "./context/AuthContext.jsx";
 import { useEffect } from "react";
+import Profile from "./pages/Profile.jsx";
+import FriendsList from "./pages/FriendsList.jsx";
+import Navbar from "./components/Navbar.jsx";
+import Connect from "./pages/Connect.jsx";
 
 const App = ()=>{
   const {setAuthUser, authUser} = useAuthContext();
@@ -25,10 +29,14 @@ const App = ()=>{
 
   return(
     <div>
+        {authUser?<Navbar/> : null}
       <Routes>
         <Route path="/" element={authUser? <Home/> : <Navigate to="/login" />} />
         <Route path="/login" element={authUser? <Navigate to="/" /> : <Login/>}/>
         <Route path="/signup" element={authUser? <Navigate to="/" /> :<Signup/>}/>
+        <Route path="/profile" element={<Profile/>}/>
+        <Route path="/friends" element={<FriendsList/>}/>
+        <Route path="/connect" element={<Connect/>}/>
       </Routes>
       <Toaster/>
     </div>

@@ -12,4 +12,40 @@ const getAllUsers = async(req, res)=>{
     }
 }
 
+const editProfile = async (req, res) => {
+    try {
+        const userId = req.user.id; 
+
+        const { fullname, bio, location, interests, avatar } = req.body;
+
+        const updates = {};
+        //Data validation
+        if (fullname) updates.fullname = fullname;
+        if (bio) updates.bio = bio;
+        if (location) updates.location = location;
+        if (interests) updates.interests = interests;
+        if (avatar) updates.avatar = avatar;
+
+        // Update user
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { $set: updates },
+            { new: true, runValidators: true }
+        ).select("-password");
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json({
+            message: "Profile updated successfully",
+            user: updatedUser
+        });
+
+    } catch (error) {
+        console.error("Edit Profile Error:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
 export default {getAllUsers};

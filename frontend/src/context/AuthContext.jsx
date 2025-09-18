@@ -8,7 +8,7 @@ export const useAuthContext = ()=>{
 }
 
 export const AuthContextProvider = ({children}) =>{
-    //Setting the Authenticated User : using Stringify to convert JS object into string as getItem and setI
+    //Setting the Authenticated User : using Stringify to convert JS object into string as getItem and setItem
     const [authUser, setAuthUser] = useState(JSON.parse(localStorage.getItem("chatUser")) || null);
     
     //Wrapping the child components with the values
