@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema({
     },
     subscription: {
         type: String,
-        enum: ["free", "premium"],
+        enum: ["free", "Premium"],
         default: "free"
     }
 }, {timestamps : true});

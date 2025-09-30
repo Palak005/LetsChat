@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const useGetConversations = ()=>{
     const [loading, setLoading] = useState(false);
@@ -9,13 +10,13 @@ const useGetConversations = ()=>{
             setLoading(true);
 
             try{
-                const res = await fetch("/api/users/all");
+                const res = await fetch("/api/user/friends");
                 const data = await res.json();
 
                 if(data.error){
                     throw new Error(data.error);
                 }
-                setConversations(data);
+                setConversations(data.friends);
     
             } catch(error){
                 toast.error(error);

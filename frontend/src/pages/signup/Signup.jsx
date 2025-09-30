@@ -1,36 +1,33 @@
 import { useState } from "react";
 import GenderCheckBox from "./GenderCheckbox.jsx";
 import { Link } from "react-router-dom";
-import toast from "react-hot-toast";
 import useSignup from "../../hooks/useSignup.js";
 
-const Signup = ()=>{
-    const {loading, signup} = useSignup();
+const Signup = () => {
+    const { loading, signup } = useSignup();
 
     const [inputs, setInputs] = useState({
-        fullname : "",
-        username : "",
-        password : "",
-        confirmPassword : "",
-        gender : ""
+        fullname: "",
+        username: "",
+        password: "",
+        confirmPassword: "",
+        gender: ""
     });
 
-    const handleChange = (event)=>{
+    const handleChange = (event) => {
         const target = event.target;
         setInputs({
             ...inputs,
-            [target.id] : target.value,
+            [target.id]: target.value,
         });
     }
 
-    const handleSubmit = async(event)=>{
-        //Preventing Default Action that is Refreshing of the Page
+    const handleSubmit = async (event) => {
         event.preventDefault();
-
         await signup(inputs);
     }
 
-    const handleCheckboxChange = (gender)=>{
+    const handleCheckboxChange = (gender) => {
         setInputs({
             ...inputs,
             gender
@@ -38,114 +35,120 @@ const Signup = ()=>{
     }
 
     return (
-        <div className="w-screen h-screen bg-[rgb(97,93,115)] flex justify-center items-center" >
-            <div className="w-2/3 h-4/5 bg-[#2C2638] rounded-3xl flex gap-0.5">
-                <div className="h-full w-1/2 bg-[#3C364C] rounded-3xl"></div>
-                <div className="h-full w-1/2 not-odd:rounded-3xl flex flex-col items-center justify-evenly">
-                    <h1 className="font-bold text-3xl ">Signup</h1>
-                    <form action="" className="flex flex-col items-center gap-4 w-3/4 h-4/5 p-4"
-                        onSubmit={handleSubmit}
-                    >
-                        <label htmlFor="fullname" className="w-full">
-                            <span>Fullname</span>
-                        <input id="fullname" type="text" placeholder="Enter Fullname" className="input bg-[#3C364C] input-bordered rounded-xl w-full max-w-xs" 
-                            value={inputs.fullname}
-                            onChange={handleChange}
-                        />      
-                        </label>
-                        <label htmlFor="username" className="w-full">
-                            <span>Username</span>
-                        <input id="username" type="text" placeholder="Enter Username" className="input bg-[#3C364C] input-bordered rounded-xl w-full max-w-xs" 
-                            value={inputs.username}
-                            onChange={handleChange}                        
-                        />
-                        </label>
-                        <label htmlFor="password" className="w-full">
-                            <span>Password</span>
-                        <input id="password" type="text" placeholder="Enter Password" className="input bg-[#3C364C] input-bordered rounded-xl w-full max-w-xs" 
-                            value={inputs.password}
-                            onChange={handleChange}                       
-                        />
-                        </label>
-                        <label htmlFor="confirmPassword" className="w-full">
-                            <span>Confirm Password</span>
-                        <input id="confirmPassword" type="text" placeholder="Re-enter Password" className="input bg-[#3C364C] input-bordered rounded-xl w-full max-w-xs" 
-                            value={inputs.confirmPassword}
-                            onChange={handleChange}                       
-                        />
-                        </label>
-                        
+        <div className="w-screen h-screen bg-gradient-to-br from-[#736E8A] via-[#615D73] to-[#8A85A6] flex justify-center items-center p-6">
+            <div className="w-full max-w-5xl h-[90vh] bg-white/20 backdrop-blur-sm rounded-3xl shadow-xl border border-white/30 flex overflow-hidden">
+                {/* Left Side - Image (Smaller) */}
+                <div className="w-2/5 h-full rounded-l-3xl overflow-hidden">
+                    <img 
+                        src="https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?q=80&w=700&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                        alt="" 
+                        className="h-full w-full object-cover brightness-110"
+                    />
+                </div>
 
-                        <GenderCheckBox 
-                            handleCheckboxChange={handleCheckboxChange}
-                            selectedGender={inputs.gender}
-                        />
-
-                        <div className="w-full flex justify-center">
-                            <button className="btn w-full max-w-xs p-6 rounded-2xl bg-[#6D54B5]">Signup</button>
+                {/* Right Side - Signup Form (Bigger) */}
+                <div className="w-3/5 h-full bg-gradient-to-br from-[#4A3F6B] to-[#6D54B5] rounded-r-3xl flex flex-col items-center justify-center p-8">
+                    <div className="w-full max-w-md">
+                        {/* Header */}
+                        <div className="text-center mb-6">
+                            <h1 className="font-bold text-5xl text-white mb-4">Join Us!</h1>
+                            <p className="text-white/80 text-lg">Create your account to get started</p>
                         </div>
-                        <p>
-                            Already have an account?
-                            <Link to="/login" className="font-bold"> Login</Link>
-                        </p>
-                        
-                    a</form>
+
+                        {/* Signup Form */}
+                        <form onSubmit={handleSubmit} className="space-y-4">
+                            <div className="space-y-4">
+                                {/* Full Name */}
+                                <label htmlFor="fullname" className="block">
+                                    <span className="text-white font-semibold text-lg mb-2 block">Full Name</span>
+                                    <input 
+                                        id="fullname" 
+                                        type="text" 
+                                        placeholder="Enter your full name" 
+                                        className="input bg-white/20 border-2 border-white/30 rounded-2xl w-full p-4 text-white text-lg placeholder-white/60"
+                                        value={inputs.fullname}
+                                        onChange={handleChange}
+                                    />
+                                </label>
+                                
+                                {/* Username */}
+                                <label htmlFor="username" className="block">
+                                    <span className="text-white font-semibold text-lg mb-2 block">Username</span>
+                                    <input 
+                                        id="username" 
+                                        type="text" 
+                                        placeholder="Choose a username" 
+                                        className="input bg-white/20 border-2 border-white/30 rounded-2xl w-full p-4 text-white text-lg placeholder-white/60"
+                                        value={inputs.username}
+                                        onChange={handleChange}
+                                    />
+                                </label>
+                                
+                                {/* Password Fields - Side by Side */}
+                                <div className="grid grid-cols-2 gap-4">
+                                    <label htmlFor="password" className="block">
+                                        <span className="text-white font-semibold text-lg mb-2 block">Password</span>
+                                        <input 
+                                            id="password" 
+                                            type="password" 
+                                            placeholder="Create password" 
+                                            className="input bg-white/20 border-2 border-white/30 rounded-2xl w-full p-4 text-white text-lg placeholder-white/60"
+                                            value={inputs.password}
+                                            onChange={handleChange}
+                                        />
+                                    </label>
+                                    
+                                    <label htmlFor="confirmPassword" className="block">
+                                        <span className="text-white font-semibold text-lg mb-2 block">Confirm Password</span>
+                                        <input 
+                                            id="confirmPassword" 
+                                            type="password" 
+                                            placeholder="Confirm password" 
+                                            className="input bg-white/20 border-2 border-white/30 rounded-2xl w-full p-4 text-white text-lg placeholder-white/60"
+                                            value={inputs.confirmPassword}
+                                            onChange={handleChange}
+                                        />
+                                    </label>
+                                </div>
+                            </div>
+
+                            {/* Gender Checkbox */}
+                            <div className="py-3">
+                                <GenderCheckBox 
+                                    handleCheckboxChange={handleCheckboxChange}
+                                    selectedGender={inputs.gender}
+                                />
+                            </div>
+                            
+                            {/* Signup Button */}
+                            <div className="pt-4">
+                                <button 
+                                    className="btn w-full p-5 rounded-2xl border-0 bg-white text-[#6D54B5] font-bold text-lg hover:bg-[#392b54] hover:text-white
+                                            transition-all duration-300 shadow-lg"
+                                    disabled={loading}
+                                >
+                                    {loading ? "Creating Account..." : "Sign Up"}
+                                </button>
+                            </div>
+
+                            {/* Login Link */}
+                            <div className="text-center pt-4">
+                                <p className="text-white">
+                                    Already have an account?{" "}
+                                    <Link 
+                                        to="/login" 
+                                        className="font-bold text-white underline transition-colors duration-200"
+                                    >
+                                        Login
+                                    </Link>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-    
         </div>
     )
 }
 
 export default Signup;
-
-
-
-//Starting Code for Signup Page
-// import GenderCheckBox from "./GenderCheckbox.jsx";
-
-// const Signup = ()=>{
-//     return (
-//         <div className="w-screen h-screen bg-[rgb(97,93,115)] flex justify-center items-center" >
-//             <div className="w-2/3 h-4/5 bg-[#2C2638] rounded-3xl flex gap-0.5">
-//                 <div className="h-full w-1/2 bg-[#3C364C] rounded-3xl"></div>
-//                 <div className="h-full w-1/2 not-odd:rounded-3xl flex flex-col items-center justify-evenly">
-//                     <h1 className="font-bold text-3xl ">Signup</h1>
-//                     <form action="" className="flex flex-col items-center gap-4 w-3/4 h-4/5 p-4">
-//                         <label htmlFor="fullname" className="w-full">
-//                             <span>Fullname</span>
-//                         <input id="fullname" type="text" placeholder="Enter Fullname" className="input bg-[#3C364C] input-bordered w-full max-w-xs" />
-//                         </label>
-//                         <label htmlFor="username" className="w-full">
-//                             <span>Username</span>
-//                         <input id="username" type="text" placeholder="Enter Fullname" className="input bg-[#3C364C] input-bordered w-full max-w-xs" />
-//                         </label>
-//                         <label htmlFor="Password" className="w-full">
-//                             <span>Password</span>
-//                         <input id="Password" type="text" placeholder="Enter Fullname" className="input bg-[#3C364C] input-bordered w-full max-w-xs" />
-//                         </label>
-//                         <label htmlFor="confirmPassword" className="w-full">
-//                             <span>Confirm Password</span>
-//                         <input id="confirmPassword" type="text" placeholder="Enter Fullname" className="input bg-[#3C364C] input-bordered w-full max-w-xs" />
-//                         </label>
-                        
-
-//                         <GenderCheckBox/>
-
-//                         <div className="w-full flex justify-center">
-//                             <button className="btn w-full max-w-xs p-6 rounded-2xl bg-[#6D54B5]">Signup</button>
-//                         </div>
-
-                        
-//                         <a href="">
-//                             Already have an account?
-//                         </a>
-//                     </form>
-//                 </div>
-//             </div>
-    
-//         </div>
-//     )
-// }
-
-// export default Signup;

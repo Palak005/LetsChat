@@ -27,7 +27,7 @@ const SearchBar = ()=>{
 
     }
 
-    return <form onSubmit={handleSubmit} className="navbar text-primary-content p-3 rounded-2xl bg-[#3C364C]">
+    return <form onSubmit={handleSubmit} className="navbar mt-[80px]  text-primary-content p-3 rounded-2xl bg-[#3C364C]">
         <div className="form-control">
             <input type="text" 
                 placeholder="Search" 

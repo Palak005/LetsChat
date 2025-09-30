@@ -10,6 +10,7 @@ import Profile from "./pages/Profile.jsx";
 import FriendsList from "./pages/FriendsList.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Connect from "./pages/Connect.jsx";
+import ProfileEdit from "./pages/ProfileEdit.jsx";
 
 const App = ()=>{
   const {setAuthUser, authUser} = useAuthContext();
@@ -21,7 +22,7 @@ const App = ()=>{
         const timeElapsed = currentTime - authUser.timestamp;
 
         if (timeElapsed > 24 * 60 * 60 * 1000) {
-            localStorage.removeItem("authUser"); // Clear storage if time exceeded
+            localStorage.removeItem("authUser"); //Clear storage if time exceeded
             setAuthUser(null);
         }
     }
@@ -35,6 +36,7 @@ const App = ()=>{
         <Route path="/login" element={authUser? <Navigate to="/" /> : <Login/>}/>
         <Route path="/signup" element={authUser? <Navigate to="/" /> :<Signup/>}/>
         <Route path="/profile" element={<Profile/>}/>
+        <Route path="/profile/edit" element={<ProfileEdit/>}/>
         <Route path="/friends" element={<FriendsList/>}/>
         <Route path="/connect" element={<Connect/>}/>
       </Routes>

@@ -1,49 +1,42 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import TinderCard from "react-tinder-card";
 
 const Connect = () => {
-  // Dummy user data (replace with backend data later)
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      username: "Alice Johnson",
-      bio: "Love photography 📸 and travel 🌍",
-      interests: ["Travel", "Music", "Photography"],
-      avatar: "https://via.placeholder.com/300",
-    },
-    {
-      id: 2,
-      username: "Bob Smith",
-      bio: "Tech geek 💻 | Fitness enthusiast 🏋️‍♂️",
-      interests: ["Tech", "Fitness", "Gaming"],
-      avatar: "https://via.placeholder.com/300",
-    },
-    {
-      id: 3,
-      username: "Charlie Brown",
-      bio: "Coffee lover ☕ | Bookworm 📚",
-      interests: ["Books", "Coffee", "Art"],
-      avatar: "https://via.placeholder.com/300",
-    },
-  ]);
+  // Dummy Data
+  const [users, setUsers] = useState([]);
 
   // Handle swipe events
-  const handleSwipe = (direction, user) => {
+  const handleSwipe = async(direction, user) => {
     if (direction === "right") {
-      console.log("Added as friend:", user.username);
-      // 🔗 Add friend API call here
+
+      //Adding user as friend
+      await axios.post("/api/user/add-friend", { friendId: user._id }, { withCredentials: true });  
+      toast.success(`${user.username} added to friends`);
+
     } else if (direction === "left") {
-      console.log("Rejected:", user.username);
-      // 🔗 Reject logic here
+      toast.error(`You rejected ${user.username}`);
     }
   };
+
+  //Loading User Friends
+  useEffect(()=>{
+    const getFriends = async()=>{
+
+      const res = await axios.get("/api/user/to-connect", {withCredentials:true});
+      if(res?.data != null && res.data.newUsers != null) setUsers(res.data.newUsers);
+    }
+
+    getFriends();
+  }, []);
 
   return (
     <div className="w-screen h-screen bg-[#615D73] flex justify-center items-center overflow-hidden">
       <div className="w-96 h-[500px] relative">
         {users.map((user) => (
           <TinderCard
-            key={user.id}
+            key={user._id}
             onSwipe={(dir) => handleSwipe(dir, user)}
             // preventSwipe={["up", "down"]}
             flickOnSwipe={true}
