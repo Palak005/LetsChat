@@ -50,12 +50,14 @@ const Profile = () => {
                       //updating user subscription
 
                       try{
-                          await axios.put("/api/user/edit-profile", {subscription : "Premium"}, {
+                          const res = await axios.put("/api/user/edit-profile", {subscription : "Premium"}, {
                             withCredentials: true,
                           });
+
+                          if(res.data?.user == null) throw new Error("Error while updating subscription");
               
                           toast.success('Subscription updated to Premium'); 
-                          navigate("/profile");      
+                          setCurrUser(res.data.user);      
                       }catch(error){
                           console.log(error);
                       }
@@ -99,45 +101,45 @@ const Profile = () => {
       <div className="w-screen h-screen bg-[#615D73] flex justify-center items-center">
           <Navbar/>
         {/* Main Container */}
-        <div className="w-3/4 h-4/5 bg-[#2C2638] rounded-3xl flex">
+        <div className="w-3/4 h-4/5 bg-gradient-to-br from-[#4A3F6B] to-[#6D54B5] border-r-[#9f91c6] rounded-4xl flex">
           {/* Left Section - Profile Photo */}
-          <div className="w-1/3 h-full flex flex-col items-center justify-center bg-[#3C364C] rounded-l-3xl p-6">
-            <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-[#6D54B5] shadow-lg">
+          <div className="w-1/3 h-full flex flex-col items-center justify-center rounded-l-4xl border-r-2 border-r-[#ffffff3f] p-6">
+            <div className="w-50 h-50 rounded-full overflow-hidden border-4 border-[#6D54B5] shadow-lg">
               <img
-                src="https://plus.unsplash.com/premium_photo-1688350808212-4e6908a03925?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                src={currUser.avatar}
                 alt="Profile"
                 className="w-full h-full object-cover"
               />
             </div>
-            <h2 className="text-white font-bold text-2xl mt-4">{currUser.fullname}</h2>
-            <p className="text-gray-300">{currUser.location}</p>
+            <h2 className="text-white font-bold text-3xl m-4">{currUser.fullname}</h2>
+            <p className="text-gray-300 text-lg">{currUser.location}</p>
                       {/* Action Buttons */}
-            <div className="mt-6">
-              <Link to="edit" className="w-[150px] bg-[#6D54B5] text-white p-3 rounded-xl hover:opacity-90 transition">
+            <div className="mt-6 w-full h-[40px] flex items-center justify-center">
+              <Link to="edit" className="h-full w-full flex justify-center items-center rounded-2xl bg-white hover:bg-white/10 hover:text-white hover:border-2 font-bold text-[#6D54B5] text-lg hover:opacity-90 transition">
                 Edit Profile
               </Link>
             </div>
           </div>
 
           {/* Right Section - Bio + Details */}
-          <div className="w-2/3 h-full flex flex-col justify-center gap-10 p-8 rounded-r-3xl">
+          <div className="w-2/3 h-full flex flex-col justify-center gap-10 p-8 rounded-r-4xl">
 
             {/* Bio */}
             <div>
-              <h3 className="text-3xl font-semibold text-white mb-2">Bio</h3>
-              <p className="text-gray-300 leading-relaxed">
+              <h3 className="text-4xl font-semibold text-white mb-2">Bio</h3>
+              <p className="text-gray-300 leading-relaxed text-lg">
                 {currUser.bio}
               </p>
             </div>
 
             {/* Interests */}
             <div>
-              <h3 className="text-3xl font-semibold text-white mb-2">Interests</h3>
+              <h3 className="text-4xl font-semibold text-white mb-2">Interests</h3>
               <div className="flex flex-wrap gap-2">
                 {currUser.interests.map((interest, idx) => (
                   <span
                     key={idx}
-                    className="px-4 py-1 bg-[#6D54B5] text-white rounded-full text-sm shadow-sm"
+                    className="px-4 py-1 bg-white/20 border-2 text-[15px] border-white/30 text-white rounded-full text-sm shadow-sm"
                   >
                     {interest}
                   </span>
@@ -145,24 +147,24 @@ const Profile = () => {
               </div>
             </div>
               {/* Subscription Status */}
-              <div className="bg-[#3C364C] p-4 rounded-2xl shadow-md mt-4">
-              <h3 className="text-xl font-semibold text-white mb-2">Subscription Status</h3>
+              <div className="bg-white/20 border-2 border-white/30 p-4 rounded-2xl shadow-md mt-4">
+              <h3 className="text-xl font-semibold text-white mb-4">Subscription Status</h3>
               
               {/* Plan Info */}
-              <p className="text-gray-300">
+              <p className="text-gray-300 text-[18px]">
                   Current Plan: <span 
                     className="px-4 py-1 bg-[#6D54B5] text-white rounded-full text-sm shadow-sm">{currUser.subscription}</span>
               </p>
 
               {currUser.subscription === "Premium" ? null : 
                     ( 
-                      <><p className="text-gray-300 mt-1">
+                      <><p className="text-gray-300 mt-3 text-[18px]">
                           Subscription Price: <span className="font-semibold">₹5000</span>
                       </p>
 
                       <button 
                         onClick={onPayment}
-                        className="mt-4 w-full bg-[#6D54B5] text-white py-2 rounded-xl hover:opacity-90 transition">
+                        className="text-[15px] mt-4 w-full bg-[#6D54B5] text-white py-2 rounded-xl hover:opacity-90 transition text-xl font-bold hover:bg-[#392b54] hover:text-amber-50">
                           Upgrade Now
                       </button></>
                     )

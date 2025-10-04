@@ -106,19 +106,35 @@ const getFriends = async(req, res)=>{
     }
 }
 
-const addFriend = async (req, res) => {
+const handleSwipe = async (req, res) => {
     try{
         const user = req.user;
         const {friendId} = req.body;
-
+        const {direction} = req.body;
         if(friendId == null){
             return res.status(400).json({message : "Friend ID is required"});
         }
 
+        user.swipeCount += 1;
+        const remainingSwipes = (user.subscription === "premium")? Infinity :  Math.max(0, 5 - user.swipeCount);
+        await user.save();
+
+        //Rejecting the swipedUser 
+        if(direction === "left"){
+            return res.status(200).json({
+                message : "User rejected successfully",
+                remainingSwipes
+            })
+        }
+
+        //Adding the swipedUser as friend
         user.friendList.push(friendId);
         await user.save();  
 
-        res.status(200).json({message : "Friend added successfully"});
+        res.status(200).json({
+            message : "Friend added successfully",
+            remainingSwipes
+        });
     }
     catch(error){
         console.log("Error while adding friend : ", error.message);
@@ -149,4 +165,4 @@ const unFriend = async(req, res)=>{
         res.status(500).json({ message: "Server error" });
     }
 }
-export default {getAllUsers, addFriend, editProfile, getUserDetails, getFriends, toConnect, unFriend};
+export default {getAllUsers, handleSwipe, editProfile, getUserDetails, getFriends, toConnect, unFriend};

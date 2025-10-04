@@ -27,12 +27,12 @@ const SearchBar = ()=>{
 
     }
 
-    return <form onSubmit={handleSubmit} className="navbar mt-[80px]  text-primary-content p-3 rounded-2xl bg-[#3C364C]">
+    return <form onSubmit={handleSubmit} className="navbar mt-[80px]  text-primary-content p-3 rounded-2xl bg-gradient-to-br from-[#42346d] to-[#6D54B5] border-1 border-white/30">
         <div className="form-control">
             <input type="text" 
                 placeholder="Search" 
                 onChange={(e)=>{setSearchChat(e.target.value)}}
-                className="input input-bordered rounded-2xl w-24 md:w-auto bg-[#3C364C]" />
+                className="input input-bordered rounded-2xl w-24 md:w-auto bg-white/20 border-2 border-white/30" />
         </div>
         <div className="navbar-end">
         <button className="btn btn-ghost btn-circle">

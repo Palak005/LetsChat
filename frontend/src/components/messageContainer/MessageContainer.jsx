@@ -13,8 +13,8 @@ const MessageContainer = ()=>{
         return () =>setSelectedConversation(null);
     }, [setSelectedConversation]);
 
-    return <div className="h-screen p-[40px] w-4/5 bg-[#3C364C] flex justify-center items-center">
-        <div className="h-10/11 w-5/6 mt-6 bg-[#2C2638] flex flex-col justify-center items-center gap-5 rounded-2xl">
+    return <div className="h-screen p-[40px] w-4/5 bg-gradient-to-br from-[#736E8A] via-[#615D73] to-[#8A85A6] flex justify-center items-center">
+        <div className="h-10/11 w-5/6 mt-6 bg-gradient-to-br from-[#4A3F6B] to-[#6D54B5] flex flex-col justify-center items-center gap-5 rounded-2xl">
         {noChatSelected? <NoChatSelected/> : (
                 <>
                     <Header/>

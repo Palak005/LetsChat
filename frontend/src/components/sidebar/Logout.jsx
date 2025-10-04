@@ -8,7 +8,7 @@ const Logout = ()=>{
     }
 
     return <button  
-        className="btn btn-active h-13 bg-[#6D54B5] rounded-2xl"
+        className="btn btn-active h-13 border-0 bg-white text-[#6D54B5] rounded-2xl text-xl font-bold hover:bg-[#392b54] hover:text-amber-50"
         onClick={handleLogout}
     >Logout</button>
 }

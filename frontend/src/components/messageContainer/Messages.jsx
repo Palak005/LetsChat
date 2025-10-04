@@ -14,7 +14,7 @@ const Messages = ()=>{
         }, 100);
     }, [messages]);
 
-    return <div className="h-3/4 w-8/9 overflow-auto no-scrollbar flex flex-col">
+    return <div className="h-full w-8/9 overflow-auto no-scrollbar flex flex-col">
         {messages.length > 0 && messages.map((message)=>(
             <div key={message._id} ref={lastMessageRef}>
                 <Message message={message}/>

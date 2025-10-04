@@ -1,40 +1,14 @@
-//Connecting Backend with Frontend
+### 🧩 Subscription & Usage Limits
 
-Installing react-router-dom
-Wrapping App within <BrowserRouter> in Main.jsx
+Free users can swipe up to **5 cards per day**.  
+Logic implemented via:
 
-Setting up Route under Routes in App.jsx
+- `checkSwipeLimit.js` middleware (resets daily, validates usage)
+- `User` model fields: `plan`, `swipeCount`, `lastSwipeDate`
+- `handleSwipe` controller increments count after successful swipe
 
+When the daily limit is reached, the backend blocks further swipes with:
 
-//Fetching data
-        setLoading(true);
-        try{
-            const res = await fetch("http://localhost:8080/api/auth/signup", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({fullname, username, password, confirmPassword, gender}),
-            })
-
-            const data = await res.json();
-            console.log(data);
-
-        }catch(error){
-            toast.error(error.message);
-        } finally{
-            setLoading(false);
-        }
-
-
-//Handling cors error : add proxy in the server in vite config file
-  server:{
-    port: 3000,
-    proxy: {
-      "/api":{
-        target : "http://localhost:8080/",
-      }
-    }
-  },
-
-
-//Creating context for Authentication 
-Creating AuthCotext in context folder
+```json
+{ "message": "Swipe limit reached for today. Upgrade your plan to continue." }
+```

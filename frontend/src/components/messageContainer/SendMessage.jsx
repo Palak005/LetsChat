@@ -16,13 +16,13 @@ const SendMessage = ()=>{
         setMessage("");
     }
 
-    return <div className="navbar w-8/9 bg-[#3C364C] rounded-2xl p-4 mb-5">
+    return <div className="navbar w-8/9 bg-gradient-to-br from-[#42346d] to-[#6D54B5] border-1 border-white/30 rounded-2xl p-4 mb-5">
         <form action="" 
             className="flex w-full"
             onSubmit={handleSubmit}>
             <input type="text"
                 placeholder="Message" 
-                className="input input-bordered w-full rounded-2xl bg-[#3C364C]" 
+                className="input input-bordered w-full rounded-2xl bg-white/20 border-2 border-white/30" 
                 onChange={(e)=> setMessage(e.target.value)}
                 value={message}
             />

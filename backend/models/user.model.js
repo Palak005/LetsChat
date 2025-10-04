@@ -43,6 +43,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ["free", "Premium"],
         default: "free"
+    },
+    swipeCount : {
+        type : Number,
+        default : 0
+    },
+    lastSwipeDate : {
+        type : Date,
+        default : null
     }
 }, {timestamps : true});
 

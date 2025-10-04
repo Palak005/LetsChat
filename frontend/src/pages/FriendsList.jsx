@@ -46,24 +46,24 @@ const FriendsList = () => {
             {friends.map((friend) => (
               <div
                 key={friend._id}
-                className="flex items-center justify-between  bg-white/20 border-2 border-white/30 rounded-2xl w-full p-4 text-white"
+                className="flex items-center justify-between bg-white/20 border-2 border-white/30 hover:bg-white/40 rounded-2xl w-full p-4 text-white"
               >
                 {/* Avatar + Name */}
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#6D54B5]">
+                  <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-[#6D54B5]">
                     <img
                       src={friend.avatar}
                       alt={friend.name}
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <span className="text-white font-medium">{friend.fullname}</span>
+                  <span className="text-white text-xl font-semibold">{friend.fullname}</span>
                 </div>
 
                 {/* Unfriend Button */}
                 <button
                   onClick={() => handleUnfriend(friend._id)}
-                  className="px-4 py-2 bg-[#6D54B5]  text-white rounded-lg text-sm transition"
+                  className="px-5 py-3 bg-white hover:bg-white/10 hover:text-white hover:border-2 font-bold text-[#6D54B5] rounded-lg text-m transition"
                 >
                   Unfriend
                 </button>
